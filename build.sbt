@@ -48,3 +48,7 @@ javaOptions ++= Seq(
   "-Xdebug",
   "-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005"
 )
+
+// Twirl
+lazy val root = (project in file(".")).enablePlugins(SbtTwirl)
+sourceDirectories in (Compile, TwirlKeys.compileTemplates) := (unmanagedSourceDirectories in Compile).value
