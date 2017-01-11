@@ -27,8 +27,8 @@ class ScalatraSampleServlet extends ScalatrasampleStack {
     params("p")
   }
 
-  get("/twirl/:p") {
-    
+  get("/twirl") {
+    org.nomadblacky.html.page.render("Hello Twirl!")
   }
 
   notFound {
