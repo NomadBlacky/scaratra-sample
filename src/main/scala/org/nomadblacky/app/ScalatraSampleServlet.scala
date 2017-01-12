@@ -31,8 +31,35 @@ class ScalatraSampleServlet extends ScalatrasampleStack {
     org.nomadblacky.html.page.render("Hello Twirl!")
   }
 
+  get("/halt") {
+    halt(403, <h1>halt</h1>)
+  }
+
   notFound {
     <h1>Not found.</h1>
   }
 
+  get("/find/*") {
+    "Missing!"
+  }
+
+  get("/find/:user") {
+    params("user") match {
+      case "blacky" => "Hi!"
+      case _ => pass()
+    }
+  }
+
+  // ignore tailing slashes
+  get("/slash/?") {
+    "OK!"
+  }
+
+  // ActionResult
+  get("/action/:p") {
+    params("p") match {
+      case "ok" => Ok(body = "OK!")
+      case _ => BadRequest(body = "BadRequest!")
+    }
+  }
 }
