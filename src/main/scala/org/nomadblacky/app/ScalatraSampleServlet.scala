@@ -2,6 +2,8 @@ package org.nomadblacky.app
 
 import org.scalatra._
 
+import scala.collection.convert.Wrappers.JEnumerationWrapper
+
 class ScalatraSampleServlet extends ScalatrasampleStack {
 
   before() {
@@ -62,4 +64,13 @@ class ScalatraSampleServlet extends ScalatrasampleStack {
       case _ => BadRequest(body = "BadRequest!")
     }
   }
+
+  get("/request_sample") {
+    val headers = new JEnumerationWrapper(request.getHeaderNames).map(name => name -> request.getHeaders(name)).toMap
+    <ul>
+      <li>{request.getMethod}</li>
+      { for (h <- headers) yield <li>{h._1} : {new JEnumerationWrapper(h._2).mkString(",")}</li> }
+    </ul>
+  }
+
 }
