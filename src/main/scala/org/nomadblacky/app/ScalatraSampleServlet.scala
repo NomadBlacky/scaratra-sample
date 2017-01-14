@@ -66,10 +66,11 @@ class ScalatraSampleServlet extends ScalatrasampleStack {
   }
 
   get("/request_sample") {
-    val headers = new JEnumerationWrapper(request.getHeaderNames).map(name => name -> request.getHeaders(name)).toMap
+    implicit def wrapper(e:java.util.Enumeration[String]):JEnumerationWrapper[String] = new JEnumerationWrapper(e)
+    val headers = request.getHeaderNames.map(name => name -> request.getHeaders(name)).toMap
     <ul>
       <li>{request.getMethod}</li>
-      { for (h <- headers) yield <li>{h._1} : {new JEnumerationWrapper(h._2).mkString(",")}</li> }
+      { for (h <- headers) yield <li>{h._1} : h._2.mkString(",")}</li> }
     </ul>
   }
 
